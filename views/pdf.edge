@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Duurzaamheidsrapportage</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@groene-otter/oc2@1.5.0/main.css"
+          integrity="sha256-nhSVnFy85Yx8B9rn0KpRB+CFXZVDqn5vpr5uKyENQyg="
+          crossorigin="anonymous"
+        />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+
+  </head>
+
+  <style>
+    html {
+      background-color: white;
+      font-family: 'Poppins', sans-serif;
+      --green-1: #b2ffbe;
+      --green-2: #7bff95;
+      --green-3: #57dd75;
+      --orange-1: #ffe6c8;
+      --orange-2: #ffd0a0;
+      --orange-3: #ffa036;
+      --red-1: #ffe3dc;
+      --red-2: #ffccc1;
+      --red-3: #ff9a88;
+      --blue-1: #d1f4ff;
+      --blue-2: #afe6ff;
+      --blue-3: #5fc9ff;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      max-inline-size: unset;
+      font-weight: 700;
+    }
+
+    h2 {
+      font-size: var(--font-size-5);
+    }
+
+    p {
+      font-size: var(--font-size-1);
+      max-inline-size: unset;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+      min-height: 1122px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-7);
+      padding-block: var(--size-8);
+      padding-inline: var(--size-7);
+
+      img {
+        max-height: 100px;
+        object-fit: contain;
+      }
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-3);
+
+      > span {
+        display: flex;
+        align-items: center;
+        gap: var(--size-3);
+      }
+    }
+
+    section {
+      min-height: 1122px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-7);
+      padding-block: var(--size-8);
+      padding-inline: var(--size-7);
+    }
+
+    .title {
+      display: flex;
+      gap: var(--size-5);
+      align-items: center;
+
+      img {
+        max-width: 100px;
+      }
+    }
+
+    .sdgs {
+      display: flex;
+      gap: var(--size-8);
+      justify-content: space-between;
+
+      img {
+        border-radius: 15px;
+      }
+
+      > div {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--size-3);
+      }
+    }
+
+    .swot-table {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--size-5);
+      width: 100%;
+
+      div {
+        padding: var(--size-3);
+
+        border: var(--border-size-3) solid var(--green-3);
+        border-radius: var(--radius-3);
+
+        &:nth-of-type(2) {
+          border-color: var(--orange-3);
+        }
+        &:nth-of-type(3) {
+          border-color: var(--blue-3);
+        }
+        &:nth-of-type(4) {
+          border-color: var(--red-3);
+        }
+      }
+
+      h5 {
+        text-align: center;
+        margin-bottom: var(--size-3);
+      }
+    }
+
+    .risks {
+      display: grid;
+      grid-template-columns: minmax(auto, 400px) minmax(auto, 50px) minmax(
+          auto,
+          400px
+        );
+      align-items: center;
+      justify-items: center;
+      gap: var(--size-5);
+
+      p {
+        width: 100%;
+      }
+    }
+
+    .opinion {
+      display: flex;
+      gap: var(--size-7);
+
+      div {
+        display: flex;
+        flex-direction: column;
+        gap: var(--size-3);
+        flex: 1;
+
+        &.summary {
+          min-width: 40vw;
+        }
+
+        ol {
+          padding-inline-start: var(--size-5);
+        }
+
+        li {
+          max-inline-size: unset;
+        }
+
+        a {
+          color: var(--text-1);
+          text-decoration-color: var(--text-1);
+
+          .ph {
+            font-size: var(--font-size-1);
+          }
+        }
+      }
+    }
+  </style>
+  <body>
+    <main>
+      <h2>{{ organization.name }}- Duurzaamheidsrapportage</h2>
+      <img src="{{ organization.logo }}" />
+      <div class="content">
+        <h4>Introductie</h4>
+        <p>
+          Dit rapport biedt een overzicht van de duurzaamheidsinspanningen van
+          onze organisatie. Het is opgesteld om inzicht te geven in hoe wij
+          bijdragen aan een duurzamere wereld en hoe wij dit vertalen naar onze
+          bedrijfsactiviteiten. Het rapport bevat een overzicht van de relevante
+          Duurzame Ontwikkelingsdoelen (SDG's), een analyse van onze sterktes,
+          zwaktes, kansen en bedreigingen (SWOT-analyse), evenals een
+          risicobeoordeling van duurzaamheidsthema's binnen onze organisatie.
+          Daarnaast wordt aandacht besteed aan hoe wij worden waargenomen door
+          het publiek op het gebied van duurzaamheid. Het doel van dit rapport
+          is om onze betrokkenheid bij duurzaamheid transparant te maken en
+          handvatten te bieden voor verdere verbeteringen en samenwerking met
+          onze stakeholders.
+        </p>
+        <h4>Korte beschrijving</h4>
+        <p>
+          {{ organization.description }}
+        </p>
+        <span>
+          <i class="ph ph-map-pin-area"></i>
+          {{ organization.address }}
+        </span>
+      </div>
+    </main>
+
+    <section>
+      <div class="title">
+        <img src="{{ organization.logo }}" />
+        <h2>Sustainable Development Goals</h2>
+      </div>
+      <div class="content">
+        <p>
+          De Duurzame Ontwikkelingsdoelen (SDG's) van de Verenigde Naties vormen
+          een kader voor organisaties om bij te dragen aan een duurzame
+          toekomst. Dit rapport richt zich op de SDG's die door onze organisatie
+          als relevant zijn geselecteerd.
+        </p>
+        <p>
+          We geven een toelichting op waarom elk SDG belangrijk is en hoe wij
+          eraan bijdragen. Deze doelen sturen onze duurzame strategie en helpen
+          ons focus aan te brengen in onze inspanningen.
+        </p>
+        <div class="sdgs">
+          @each(sdg in sdgs)
+          <div>
+            <img src="{{ sdg.sdg }}" alt="" />
+            <p>
+              {{ sdg.explanation }}
+            </p>
+          </div>
+          @end
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="title">
+        <img src="{{ organization.logo }}" />
+        <h2>SWOT-analyse</h2>
+      </div>
+      <div class="content">
+        <p>
+          De SWOT-analyse geeft inzicht in onze duurzaamheidsprestaties door
+          interne sterke en zwakke punten, en externe kansen en bedreigingen te
+          analyseren.
+        </p>
+        <p>
+          Deze analyse toont waar we sterk staan, waar verbetering nodig is en
+          welke kansen en bedreigingen er in onze omgeving zijn. Hiermee kunnen
+          we gerichte acties ondernemen om onze duurzaamheid te versterken.
+        </p>
+        <div class="swot-table">
+          <div>
+            <h5>Sterktes</h5>
+            @each(s in swot.strengths)
+            <p>
+              {{ s }}
+            </p>
+            @end
+          </div>
+          <div>
+            <h5>Zwaktes</h5>
+            @each(s in swot.weaknesses)
+            <p>
+              {{ s }}
+            </p>
+            @end
+          </div>
+          <div>
+            <h5>Kansen</h5>
+            @each(s in swot.opportunities)
+            <p>
+              {{ s }}
+            </p>
+            @end
+          </div>
+          <div>
+            <h5>Bedreigingen</h5>
+            @each(s in swot.threats)
+            <p>
+              {{ s }}
+            </p>
+            @end
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="title">
+        <img src="{{ organization.logo }}" />
+        <h2>Risico-analyse</h2>
+      </div>
+      <div class="content">
+        <p>
+          Duurzaamheidsrisico's kunnen de bedrijfsvoering beïnvloeden. Dit
+          hoofdstuk biedt een overzicht van de belangrijkste risico's die we
+          hebben geïdentificeerd, en de maatregelen om deze te beheersen.
+        </p>
+        <p>
+          De beschreven maatregelen helpen ons risico's te minimaliseren en
+          voorbereid te zijn op uitdagingen, zodat we onze duurzaamheidsdoelen
+          kunnen blijven nastreven.
+        </p>
+        <div class="risks">
+          <h5>Risico's</h5>
+          <span></span>
+          <h5>Maatregelen</h5>
+          @each(risk in risks)
+          <p>
+            {{ risk.risk }}
+          </p>
+          <i class="ph ph-arrow-right"></i>
+          <p>
+            {{ risk.measure }}
+          </p>
+          @end
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="title">
+        <img src="{{ organization.logo }}" />
+        <h2>Publieke opinie</h2>
+      </div>
+      <div class="content">
+        <p>
+          De publieke perceptie van onze organisatie is essentieel voor onze
+          externe communicatie. Dit hoofdstuk vat samen wat er online en via
+          andere kanalen wordt gezegd over onze organisatie.
+        </p>
+        <p>
+          Deze inzichten helpen ons onze reputatie te versterken en strategieën
+          aan te passen, gebaseerd op hoe klanten, leveranciers en andere
+          stakeholders ons beoordelen.
+        </p>
+        <div class="opinion">
+          <div class="summary">
+            <h5>Samenvatting</h5>
+            <p>
+              {{ opinion.opinion }}
+            </p>
+          </div>
+          <div>
+            <h5>Referenties</h5>
+            <ol>
+              @each(ref in opinion.references)
+              <li>
+                <a href="{{ ref.link }}" target="_blank"
+                  >{{ ref.label }} <i class="ph ph-arrow-square-out"></i
+                ></a>
+              </li>
+              @end
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

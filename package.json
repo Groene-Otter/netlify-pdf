@@ -12,6 +12,7 @@
   "dependencies": {
     "@sparticuz/chromium": "129.0.0",
     "dotenv": "^16.4.5",
+    "edge.js": "^6.2.0",
     "puppeteer-core": "23.5.0"
   }
 }
