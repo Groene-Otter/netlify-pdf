@@ -1,5 +1,6 @@
 import chromium from '@sparticuz/chromium'
 import puppeteer from 'puppeteer-core'
+import 'dotenv/config'
 
 const url = 'https://lite.cnn.com/'
 
@@ -7,39 +8,49 @@ chromium.setHeadlessMode = true
 chromium.setGraphicsMode = false
 
 export async function handler(event, context) {
-  try {
-    const browser = await puppeteer.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: process.env.CHROME_EXECUTABLE_PATH || (await chromium.executablePath('/var/task/node_modules/@sparticuz/chromium/bin')),
-    })
+    try {
+        const browser = await puppeteer.launch({
+            args: process.env.IS_LOCAL ? puppeteer.defaultArgs() : chromium.args,
+            defaultViewport: chromium.defaultViewport,
+            executablePath: process.env.IS_LOCAL
+                ? "/tmp/localChromium/chromium/linux-1122391/chrome-linux/chrome"
+                : process.env.CHROME_EXECUTABLE_PATH || await chromium.executablePath(),
+            headless: process.env.IS_LOCAL ? false : chromium.headless,
+        });
 
-    const page = await browser.newPage()
+        const page = await browser.newPage()
 
-    await page.goto(url)
+        await page.goto(url, {
+            waitUntil: ['domcontentloaded', 'load', "networkidle0"],
+        })
 
-    await page.waitForSelector('.title')
+        const pdf = await page.pdf({
+            format: 'A4', printBackground: true,
+            margin: {
+                top: '1cm',
+                right: '1cm',
+                bottom: '1cm',
+                left: '1cm',
+            },
+        });
 
-    const results = await page.$$eval('ul li', (articles) => {
-      return articles.map((link) => {
+        await browser.close();
+
+        const pdfBuffer = Buffer.from(pdf);
+
         return {
-          title: link.querySelector('a').innerText,
-          url: link.querySelector('a').href,
+            statusCode: 200,
+            isBase64Encoded: true,
+            body: pdfBuffer.toString('base64'),
+            headers: {
+                'Content-Type': 'application/pdf'
+            },
         }
-      })
-    })
-
-    await browser.close()
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify(results),
+    } catch (error) {
+        console.error(error)
+        return {
+            statusCode: 500,
+            body: JSON.stringify({error}),
+        }
     }
-  } catch (error) {
-    console.error(error)
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error }),
-    }
-  }
 }
