@@ -23,6 +23,11 @@
   </head>
 
   <style>
+    @page {
+      size: A4 portrait;
+      margin-block: 48px;
+    }
+
     html {
       background-color: white;
       font-family: 'Poppins', sans-serif;
@@ -65,12 +70,11 @@
     }
 
     main {
+      break-inside: avoid;
       flex: 1;
-      min-height: 1122px;
       display: flex;
       flex-direction: column;
       gap: var(--size-7);
-      padding-block: var(--size-8);
       padding-inline: var(--size-7);
 
       img {
@@ -93,11 +97,9 @@
 
     section {
       break-inside: avoid;
-      min-height: 1122px;
       display: flex;
       flex-direction: column;
       gap: var(--size-7);
-      padding-block: var(--size-8);
       padding-inline: var(--size-7);
     }
 
