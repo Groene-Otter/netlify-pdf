@@ -240,6 +240,7 @@
       </div>
     </main>
 
+    @if(sdgs.length > 0)
     <section>
       <div class="title">
         <img src="{{ organization.logo }}" />
@@ -269,7 +270,9 @@
         </div>
       </div>
     </section>
+    @end
 
+    @if(swot.strengths.length > 0 || swot.weaknesses.length > 0 || swot.opportunities.length > 0 || swot.threats.length > 0)
     <section>
       <div class="title">
         <img src="{{ organization.logo }}" />
@@ -322,7 +325,9 @@
         </div>
       </div>
     </section>
+    @end
 
+    @if(risks.length > 0)
     <section>
       <div class="title">
         <img src="{{ organization.logo }}" />
@@ -355,7 +360,9 @@
         </div>
       </div>
     </section>
+    @end
 
+    @if(opinion.opinion.length > 0)
     <section>
       <div class="title">
         <img src="{{ organization.logo }}" />
@@ -394,5 +401,6 @@
         </div>
       </div>
     </section>
+    @end
   </body>
 </html>
