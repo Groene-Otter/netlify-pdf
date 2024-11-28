@@ -23,14 +23,14 @@
   </head>
 
   <style>
-    @page {
+    @page default {
       size: A4 portrait;
-      margin-block: 48px;
     }
 
     html {
       background-color: white;
       font-family: 'Poppins', sans-serif;
+      font-size: var(--font-size-0);
       --green-1: #b2ffbe;
       --green-2: #7bff95;
       --green-3: #57dd75;
@@ -43,7 +43,11 @@
       --blue-1: #d1f4ff;
       --blue-2: #afe6ff;
       --blue-3: #5fc9ff;
+
+      -webkit-print-color-adjust:exact !important;
+        print-color-adjust:exact !important;
     }
+
     h1,
     h2,
     h3,
@@ -70,7 +74,11 @@
     }
 
     main {
+      page: default;
+      padding-block: 16px;
       break-inside: avoid;
+      width: 100%;
+      height: 100%;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -80,6 +88,22 @@
       img {
         max-height: 100px;
         object-fit: contain;
+      }
+
+      svg {
+        max-height: 250px;
+      }
+
+      .grid-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--size-3);
+
+        > span {
+          display: flex;
+          align-items: center;
+          gap: var(--size-3);
+        }
       }
     }
 
@@ -96,7 +120,10 @@
     }
 
     section {
+      page: default;
+      padding-block: 16px;
       break-inside: avoid;
+      page-break-after: always;
       display: flex;
       flex-direction: column;
       gap: var(--size-7);
@@ -114,16 +141,16 @@
     }
 
     .sdgs {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       gap: var(--size-8);
-      justify-content: space-between;
 
       img {
         border-radius: 15px;
+        width: 200px;
       }
 
       > div {
-        flex: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -208,40 +235,173 @@
         }
       }
     }
+
+    @page landscape {
+      size: A4 landscape;
+    }
+    .landscape {
+        page: landscape;
+        width: 100vh;
+        height: 100vw;
+        padding-block: 16px;
+    }
+    .bmc {
+      break-inside: avoid;
+      margin: 0;
+      padding: 0 !important;
+      display: grid;
+      grid-template-areas:
+          'kp kp ka ka vp vp cr cr cs cs'
+          'kp kp kr kr vp vp c c cs cs'
+          'cst cst cst cst cst rs rs rs rs rs';
+      grid-template-columns: repeat(10, 1fr);
+      grid-template-rows: 3fr 3fr 2fr;
+      gap: 0;
+      color: white;
+      > div {
+        padding: 1rem;
+      }
+
+      p {
+      font-size: 0.9rem;
+      }
+
+      h6 {
+        margin-block-end: 4px;
+      }
+    }
+    .key-partners {
+      grid-area: kp;
+      background: #e2ac02;
+    }
+
+    .key-activities {
+      grid-area: ka;
+      background: #4f81bc;
+    }
+
+    .key-resources {
+      grid-area: kr;
+      background: #e86e0b;
+    }
+
+    .value-propositions {
+      grid-area: vp;
+      background: #01b0f1;
+    }
+
+    .customer-relationships {
+      grid-area: cr;
+      background: #008f3f
+    }
+
+    .channels {
+      grid-area: c;
+      background: #20487c;
+    }
+
+    .customer-segments {
+      grid-area: cs;
+      background: #fe0000;
+    }
+
+    .cost-structure {
+      grid-area: cst;
+      background: #20487c;
+    }
+
+    .revenue-streams {
+      grid-area: rs;
+      background: #c10003;
+    }
   </style>
   <body>
-    <main>
-      <h2>{{ organization.name }}- Duurzaamheidsrapportage</h2>
-      <img src="{{ organization.logo }}" />
-      <div class="content">
-        <h4>Introductie</h4>
-        <p>
-          Dit rapport biedt een overzicht van de duurzaamheidsinspanningen van
-          onze organisatie. Het is opgesteld om inzicht te geven in hoe wij
-          bijdragen aan een duurzamere wereld en hoe wij dit vertalen naar onze
-          bedrijfsactiviteiten. Het rapport bevat een overzicht van de relevante
-          Duurzame Ontwikkelingsdoelen (SDG's), een analyse van onze sterktes,
-          zwaktes, kansen en bedreigingen (SWOT-analyse), evenals een
-          risicobeoordeling van duurzaamheidsthema's binnen onze organisatie.
-          Daarnaast wordt aandacht besteed aan hoe wij worden waargenomen door
-          het publiek op het gebied van duurzaamheid. Het doel van dit rapport
-          is om onze betrokkenheid bij duurzaamheid transparant te maken en
-          handvatten te bieden voor verdere verbeteringen en samenwerking met
-          onze stakeholders.
-        </p>
-        <h4>Korte beschrijving</h4>
-        <p>
-          {{ organization.description }}
-        </p>
-        <span>
-          <i class="ph ph-map-pin-area"></i>
-          {{ organization.address }}
-        </span>
-      </div>
+  <main>
+        <h2>{{ organization.name }}- Duurzaamheidsrapportage</h2>
+        <img src="{{ organization.logo }}" />
+        <div class="grid-content">
+        <div class="content">
+          <h4>Introductie</h4>
+          <p>
+            Dit rapport biedt een overzicht van de duurzaamheidsinspanningen van
+            onze organisatie. Het is opgesteld om inzicht te geven in hoe wij
+            bijdragen aan een duurzamere wereld en hoe wij dit vertalen naar onze
+            bedrijfsactiviteiten. Het rapport bevat ons Business Model Canvas, een overzicht van de relevante
+            Duurzame Ontwikkelingsdoelen (SDG's), een analyse van onze sterktes,
+            zwaktes, kansen en bedreigingen (SWOT-analyse), evenals een
+            risicobeoordeling van duurzaamheidsthema's binnen onze organisatie.
+            Daarnaast wordt aandacht besteed aan hoe wij worden waargenomen door
+            het publiek op het gebied van duurzaamheid. Het doel van dit rapport
+            is om onze betrokkenheid bij duurzaamheid transparant te maken en
+            handvatten te bieden voor verdere verbeteringen en samenwerking met
+            onze stakeholders.
+          </p>
+          <h4>Beschrijving van de organisatie</h4>
+          <p>
+            {{ organization.description }}
+          </p>
+          <span>
+            <i class="ph ph-map-pin-area"></i>
+            {{ organization.address }}
+          </span>
+          </div>
+          <div class="right">
+            @!component('components/report-svg')
+          </div>
+        </div>
     </main>
+    @if(bmc.keyPartner.length > 0 ||
+              bmc.keyActivity.length > 0 ||
+              bmc.keyResource.length > 0 ||
+              bmc.valueProposition.length > 0 ||
+              bmc.customerRelationship.length > 0 ||
+              bmc.channel.length > 0 ||
+              bmc.customerSegment.length > 0 ||
+              bmc.costStructure.length > 0 ||
+              bmc.revenueStream.length > 0)
+          <section class="bmc landscape">
+              <div class="key-partners">
+                  <h6>Key partners</h6>
+                  <p>{{{ nl2br(bmc.keyPartner) }}}</p>
+              </div>
+              <div class="key-activities">
+                  <h6>Key activities</h6>
+                  <p>{{{ nl2br(bmc.keyActivity) }}}</p>
+              </div>
+              <div class="key-resources">
+                  <h6>Key resources</h6>
+                  <p>{{{ nl2br(bmc.keyResource) }}}</p>
+              </div>
+              <div class="value-propositions">
+                  <h6>Value propositions</h6>
+                  <p>{{{ nl2br(bmc.valueProposition) }}}</p>
+              </div>
+              <div class="customer-relationships">
+                  <h6>Customer relationships</h6>
+                  <p>{{{ nl2br(bmc.customerRelationship) }}}</p>
+              </div>
+              <div class="channels">
+                  <h6>Channels</h6>
+                  <p>{{{ nl2br(bmc.channel) }}}</p>
+              </div>
+              <div class="customer-segments">
+                  <h6>Customer segments</h6>
+                  <p>{{{ nl2br(bmc.customerSegment) }}}</p>
+              </div>
+              <div class="cost-structure">
+                  <h6>Cost structures</h6>
+                  <p>{{{ nl2br(bmc.costStructure) }}}</p>
+              </div>
+              <div class="revenue-streams">
+                  <h6>Revenue streams</h6>
+                  <p>{{{ nl2br(bmc.revenueStream) }}}</p>
+              </div>
+          </section>
+          @end
+
 
     @if(sdgs.length > 0)
-    <section>
+    <section class="landscape">
       <div class="title">
         <img src="{{ organization.logo }}" />
         <h2>Sustainable Development Goals</h2>
@@ -252,11 +412,6 @@
           een kader voor organisaties om bij te dragen aan een duurzame
           toekomst. Dit rapport richt zich op de SDG's die door onze organisatie
           als relevant zijn geselecteerd.
-        </p>
-        <p>
-          We geven een toelichting op waarom elk SDG belangrijk is en hoe wij
-          eraan bijdragen. Deze doelen sturen onze duurzame strategie en helpen
-          ons focus aan te brengen in onze inspanningen.
         </p>
         <div class="sdgs">
           @each(sdg in sdgs)
@@ -279,11 +434,6 @@
         <h2>SWOT-analyse</h2>
       </div>
       <div class="content">
-        <p>
-          De SWOT-analyse geeft inzicht in onze duurzaamheidsprestaties door
-          interne sterke en zwakke punten, en externe kansen en bedreigingen te
-          analyseren.
-        </p>
         <p>
           Deze analyse toont waar we sterk staan, waar verbetering nodig is en
           welke kansen en bedreigingen er in onze omgeving zijn. Hiermee kunnen

@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Netlify Puppeteer Test</title>
-    <meta name="description" content="We had a real hassle getting puppeteer working on Netlify, but we did, and here is a demo project for our reference." />
+    <meta name="description" content="Groene Otter helpt bij al je duurzaamheidsvraagstukken, CSRD en VSME." />
 
     <style>
       * {
@@ -32,30 +32,8 @@
     </style>
   </head>
   <body>
-    <h2>Netlify Puppeteer Test</h2>
+    <h2>Groene Otter report generator</h2>
 
-    <p>News headlines from <a href="https://lite.cnn.com/">cnn lite</a></p>
-
-    <div class="news">Loading news…</div>
-
-    <script>
-      const newsEl = document.querySelector('.news')
-
-      const getPuppeteerData = async () => {
-        const puppetData = await fetch('/.netlify/functions/puppet')
-        const news = await puppetData.json()
-        return news
-      }
-
-      ;(async () => {
-        const news = await getPuppeteerData()
-        const items = news
-          .map((item) => {
-            return `<div><h2><a href="${item.url}">${item.title}</a></h2>`
-          })
-          .join('')
-        newsEl.innerHTML = items
-      })()
-    </script>
+    <p>Voor alle informatie kun je kijken op de website van de <a href="https://groeneotter.nl/">groene otter</a></p>
   </body>
 </html>
