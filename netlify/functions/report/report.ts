@@ -51,6 +51,7 @@ export const handler = async (req) => {
     args: [
       ...(process.env.IS_LOCAL ? puppeteer.defaultArgs() : chromium.args),
       "--disable-web-security",
+      "--disable-features=site-per-process",
     ],
     defaultViewport: chromium.defaultViewport,
     executablePath: process.env.IS_LOCAL
