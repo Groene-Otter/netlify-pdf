@@ -45,7 +45,7 @@ export const handler = async (req) => {
     logoDataUrl: string;
     title: string;
     headerColor: string;
-  } = await req.json();
+  } = JSON.parse(req.body);
 
   const browser = await puppeteer.launch({
     args: [
@@ -202,14 +202,17 @@ export const handler = async (req) => {
   const pdfBytes = await finalPdf.save();
   console.log("Final pdf completed");
 
-  return new Response(pdfBytes, {
+  return {
+    statusCode: 200,
+    isBase64Encoded: true,
+    body: Buffer.from(pdfBytes).toString("base64"),
     headers: {
       "Content-Type": "application/pdf",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers":
         "authorization, x-client-info, apikey, content-type",
     },
-  });
+  };
 
   // const data = ReportDto.parse(JSON.parse(req.body));
 
